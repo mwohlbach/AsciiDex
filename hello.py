@@ -1,11 +1,9 @@
 from PIL import Image
 import io
 import urllib.request
+import click
 
 ASCII_CHARS = [ '     ', '?????', '%%%%%', '.....', 'SSSSS', '+++++', '.....', '*****', ':::::', ',,,,,', '@@@@@']
-
-pictureUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/'
-#pictureUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'
 
 colorMap = {}
 #colorMap['\u001b[0m'] = (196,196,196) #reset
@@ -294,17 +292,36 @@ colorMap256 =  { # color look-up table
 '255': 'eeeeee'
 }
 
+@click.command()
+@click.option('-s',is_flag=True,help='Use this flag to make it print out the shiny version of the pokemon')
+@click.argument('pokemon')
+def cli(pokemon,s):
+    """I do something"""
 
-def cli(pkmnNo):
+    image = openImageForPokemon(pokemon,s)
 
-    request = urllib.request.Request(pictureUrl + pkmnNo + '.png')
-    request.add_header('User-Agent','AsciiDex')
+    convertImageToColoredPixels(image,96)
+    #asciiPrintImage(image)
+
+def openImageForPokemon(pkmnNo,shiny):
+    pokemonSpriteUrl = getPokemonSpriteUrl(shiny)
+
+    request = urllib.request.Request(pokemonSpriteUrl + pkmnNo + '.png')
+    request.add_header('User-Agent', 'AsciiDex')
     file = io.BytesIO(urllib.request.urlopen(request).read())
 
     image = Image.open(file)
 
-    convertImageToColoredPixels(image,96)
-    #asciiPrintImage(image)
+    return image
+
+def getPokemonSpriteUrl(shiny):
+    pokemonSpriteUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/'
+
+    if (shiny):
+        pokemonSpriteUrl += 'shiny/'
+
+    return pokemonSpriteUrl
+
 
 def scaleImage(image, newWidth):
     """Resizes an image preserving the aspect ratio.
@@ -461,7 +478,6 @@ def hexToRGB(hex):
     return tuple(int(hex[i:i + 2], 16) for i in (0, 2, 4))
 
 
-cli('39')
 
 
 
