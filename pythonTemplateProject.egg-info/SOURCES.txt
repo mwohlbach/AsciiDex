@@ -1,0 +1,7 @@
+README.md
+pythonTemplateProject.egg-info/PKG-INFO
+pythonTemplateProject.egg-info/SOURCES.txt
+pythonTemplateProject.egg-info/dependency_links.txt
+pythonTemplateProject.egg-info/entry_points.txt
+pythonTemplateProject.egg-info/requires.txt
+pythonTemplateProject.egg-info/top_level.txt

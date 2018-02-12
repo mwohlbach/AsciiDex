@@ -1,0 +1,16 @@
+Metadata-Version: 1.1
+Name: pythonTemplateProject
+Version: 0.1.0
+Summary: Template for starting a Python project.
+Home-page: http://github.com/yourname/yourproject.git
+Author: yourname
+Author-email: youremail@domain.com
+License: GNU
+Description-Content-Type: UNKNOWN
+Description: A long description for display on the PyPi description page
+Keywords: example template project
+Platform: UNKNOWN
+Classifier: Development Status :: Alpha
+Classifier: Intended Audience :: Developers
+Classifier: License :: GNU General Public License
+Classifier: Programming Language :: Python :: 3.6
