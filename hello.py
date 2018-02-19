@@ -300,6 +300,8 @@ def cli(pokemon,s):
 
     image = openImageForPokemon(pokemon,s)
 
+    #image = Image.open('/Users/mwohlbach/Desktop/monalisa.jpg')
+
     convertImageToColoredPixels(image,96)
     #asciiPrintImage(image)
 
@@ -438,9 +440,9 @@ def pixelPrintImage(image):
             pixel = image.getpixel((x,y))
             if(pixel != (0,0,0)):
                 setAnsiColor256(*pixel)
-                print('█████',end='')
+                print('██████',end='')
             else:
-                print('     ',end='')
+                print('      ',end='')
     print('\u001b[0m')
 
 
@@ -472,7 +474,7 @@ def setAnsiColor256(R, G, B):
         if mindiff is None or diff < mindiff:
             mindiff = diff
             mincolorname = d
-    print('\u001b[0m' + '\u001b[38;5;' + mincolorname + 'm', end='')
+    print('\u001b[0m'  +  '\u001b[38;5;' + mincolorname + 'm', end='')
 
 def hexToRGB(hex):
     return tuple(int(hex[i:i + 2], 16) for i in (0, 2, 4))
