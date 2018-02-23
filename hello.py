@@ -292,13 +292,19 @@ colorMap256 =  { # color look-up table
 '255': 'eeeeee'
 }
 
+
+
 @click.command()
 @click.option('-s',is_flag=True,help='Use this flag to make it print out the shiny version of the pokemon')
+@click.option('-p',type=click.Path(exists=True),help='You can pass the path to an image you want to print')
 @click.argument('pokemon')
-def cli(pokemon,s):
+def cli(pokemon,s,p):
     """I do something"""
 
-    image = openImageForPokemon(pokemon,s)
+    if(p):
+        image = Image.open(p)
+    else:
+        image = openImageForPokemon(pokemon,s)
 
     #image = Image.open('/Users/mwohlbach/Desktop/monalisa.jpg')
 
@@ -478,8 +484,6 @@ def setAnsiColor256(R, G, B):
 
 def hexToRGB(hex):
     return tuple(int(hex[i:i + 2], 16) for i in (0, 2, 4))
-
-
 
 
 
