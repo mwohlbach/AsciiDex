@@ -9,8 +9,9 @@ ASCII_CHARS = [ '     ', '?????', '%%%%%', '.....', 'SSSSS', '+++++', '.....', '
 @click.command()
 @click.option('-s',is_flag=True,help='Use this flag to make it print out the shiny version of the pokemon')
 @click.option('-p',type=click.Path(exists=True),help='You can pass the path to an image you want to print')
+@click.option('-lowcolors',is_flag=True,default=False,help="Use this flag if the console you are using doesn't support 256 colors")
 @click.argument('pokemon')
-def cli(pokemon,s,p):
+def cli(pokemon,s,p,lowcolors):
     """I do something"""
 
     if(p):
@@ -20,7 +21,7 @@ def cli(pokemon,s,p):
 
     #image = Image.open('/Users/mwohlbach/Desktop/monalisa.jpg')
 
-    convertImageToColoredPixels(image,96)
+    convertImageToColoredPixels(image,96,lowcolors)
     #asciiPrintImage(image)
 
 def openImageForPokemon(pkmnNo,shiny):
@@ -146,7 +147,7 @@ def removeBorders(image):
 
     return newImage
 
-def pixelPrintImage(image):
+def pixelPrintImage(image,lowcolors):
     """
     Prints out an RGB image with pixels.
     """
@@ -157,14 +158,14 @@ def pixelPrintImage(image):
         for x in range(width):
             pixel = image.getpixel((x,y))
             if(pixel != (0,0,0)):
-                util.AnsiColors.printAnsiColor(True,*pixel)
+                util.AnsiColors.printAnsiColor(lowcolors,*pixel)
                 print('██████',end='')
             else:
                 print('      ',end='')
     print('\u001b[0m')
 
 
-def convertImageToColoredPixels(image, newWidth):
+def convertImageToColoredPixels(image, newWidth, lowcolors):
 
     image = scaleImage(image, newWidth)
 
@@ -172,6 +173,6 @@ def convertImageToColoredPixels(image, newWidth):
 
     image = removeBorders(image)
 
-    pixelPrintImage(image)
+    pixelPrintImage(image,lowcolors)
 
 

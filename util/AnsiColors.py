@@ -285,13 +285,11 @@ colorMap256 =  { # color look-up table
 '255': 'eeeeee'
 }
 
-def printAnsiColor(mode256,R,G,B):
-    if(mode256):
-        setAnsiColor256(R,G,B)
-    else:
+def printAnsiColor(lowcolors,R,G,B):
+    if(lowcolors):
         setAnsiColor(R,G,B)
-
-
+    else:
+        setAnsiColor256(R,G,B)
 
 
 def setAnsiColor(R, G, B):
@@ -302,7 +300,8 @@ def setAnsiColor(R, G, B):
         if mindiff is None or diff < mindiff:
             mindiff = diff
             mincolorname = d
-    print('\u001b[0m',mincolorname,end='')
+    print('\u001b[0m' + mincolorname,end='')
+
 
 def setAnsiColor256(R, G, B):
     mindiff = None
