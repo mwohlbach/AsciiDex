@@ -27,7 +27,7 @@ setup(
     data_files=None, #used for anything outside the package directory
     entry_points={
         'console_scripts': [
-            'hello=hello:cli'
+            'AsciiDex=AsciiDex:cli'
         ]
     }
 
