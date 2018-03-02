@@ -14,15 +14,16 @@ ASCII_CHARS = [ '     ', '?????', '%%%%%', '.....', 'SSSSS', '+++++', '.....', '
 def cli(pokemon,s,p,lowcolors):
     """I do something"""
 
-    if(p):
-        image = Image.open(p)
-    else:
-        image = openImageForPokemon(pokemon,s)
-
-    #image = Image.open('/Users/mwohlbach/Desktop/monalisa.jpg')
+    image = imageToPrint(pokemon,s,p)
 
     convertImageToColoredPixels(image,96,lowcolors)
     #asciiPrintImage(image)
+
+def imageToPrint(pokemon,s,p):
+    if (p):
+        return Image.open(p)
+    else:
+        return openImageForPokemon(pokemon, s)
 
 def openImageForPokemon(pkmnNo,shiny):
     pokemonSpriteUrl = getPokemonSpriteUrl(shiny)
