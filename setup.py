@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='pythonTemplateProject',
+    name='AsciiDex',
     version='0.1.0',
     description='Template for starting a Python project.',
     long_description='A long description for display on the PyPi description page',
@@ -17,7 +17,7 @@ setup(
     ],
     keywords='example template project',
     packages=find_packages(exclude=['docs', 'tests*']),
-    py_modules=['hello '],
+    py_modules=['AsciiDex','util.AnsiColors'],
     install_requires=[
         'Click'
     ], #dependicies i.e. 'requests'

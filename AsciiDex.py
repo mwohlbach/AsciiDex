@@ -11,6 +11,7 @@ ASCII_CHARS = [ '     ', '?????', '%%%%%', '.....', 'SSSSS', '+++++', '.....', '
 @click.option('-p',type=click.Path(exists=True),help='You can pass the path to an image you want to print')
 @click.option('-lowcolors',is_flag=True,default=False,help="Use this flag if the console you are using doesn't support 256 colors")
 @click.argument('pokemon')
+@click.help_option('-h','-help','--help')
 def cli(pokemon,s,p,lowcolors):
     """I do something"""
 
