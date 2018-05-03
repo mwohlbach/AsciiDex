@@ -3,26 +3,31 @@ import io
 import urllib.request
 import click
 import util.AnsiColors
+import random
 
 ASCII_CHARS = [ '     ', '?????', '%%%%%', '.....', 'SSSSS', '+++++', '.....', '*****', ':::::', ',,,,,', '@@@@@']
 
 @click.command()
-@click.option('-s',is_flag=True,help='Use this flag to make it print out the shiny version of the pokemon')
-@click.option('-p',type=click.Path(exists=True),help='You can pass the path to an image you want to print')
-@click.option('-lowcolors',is_flag=True,default=False,help="Use this flag if the console you are using doesn't support 256 colors")
-@click.argument('pokemon')
+@click.option('-s',is_flag=True,help='Use this flag to make it print out the shiny version of the pokemon.')
+@click.option('-p',type=click.Path(exists=True),help='You can pass the path to an image you want to print.')
+@click.option('-lowcolors',is_flag=True,default=False,help="Use this flag if the console you are using doesn't support 256 colors.")
+@click.option('-r',is_flag=True,help='This will print out a random pokemon.')
+@click.option('-v',type=int,default=0,help='This will make the percentage you specify vanish from the image.')
+@click.argument('pokemon',required=False)
 @click.help_option('-h','-help','--help')
-def cli(pokemon,s,p,lowcolors):
+def cli(pokemon,s,p,lowcolors,r,v):
     """I do something"""
 
-    image = imageToPrint(pokemon,s,p)
+    image = imageToPrint(pokemon,s,p,r)
 
-    convertImageToColoredPixels(image,96,lowcolors)
+    convertImageToColoredPixels(image,96,lowcolors,v)
     #asciiPrintImage(image)
 
-def imageToPrint(pokemon,s,p):
+def imageToPrint(pokemon,s,p,r):
     if (p):
         return Image.open(p)
+    elif (r):
+        return openImageForPokemon(str(random.randint(1,802)),s)
     else:
         return openImageForPokemon(pokemon, s)
 
@@ -149,7 +154,7 @@ def removeBorders(image):
 
     return newImage
 
-def pixelPrintImage(image,lowcolors):
+def pixelPrintImage(image,lowcolors,v):
     """
     Prints out an RGB image with pixels.
     """
@@ -159,7 +164,12 @@ def pixelPrintImage(image,lowcolors):
         print('\n')
         for x in range(width):
             pixel = image.getpixel((x,y))
-            if(pixel != (0,0,0)):
+
+            vanish = v > random.randint(0,100)
+
+            if(vanish):
+                print('      ', end='')
+            elif(pixel != (0,0,0)):
                 util.AnsiColors.printAnsiColor(lowcolors,*pixel)
                 print('██████',end='')
             else:
@@ -167,7 +177,7 @@ def pixelPrintImage(image,lowcolors):
     print('\u001b[0m')
 
 
-def convertImageToColoredPixels(image, newWidth, lowcolors):
+def convertImageToColoredPixels(image, newWidth, lowcolors, v):
 
     image = scaleImage(image, newWidth)
 
@@ -175,6 +185,6 @@ def convertImageToColoredPixels(image, newWidth, lowcolors):
 
     image = removeBorders(image)
 
-    pixelPrintImage(image,lowcolors)
+    pixelPrintImage(image,lowcolors,v)
 
 
